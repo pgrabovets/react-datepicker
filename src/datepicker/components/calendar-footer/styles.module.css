@@ -1,0 +1,26 @@
+.calendar_footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.clear_btn {
+  min-width: 60px;
+  min-height: 24px;
+  text-align: center;
+  padding: 0px 12px;
+  color: #3398db;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  box-shadow: none;
+  outline: none;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.clear_btn:hover {
+  color: #3398db;
+  background-color: #efefef;
+}

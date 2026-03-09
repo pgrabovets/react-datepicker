@@ -1,0 +1,8 @@
+.input_range_grid {
+  display: grid;
+  gap: 8px;
+}
+
+.input_range_grid_cols_2 {
+  grid-template-columns: 1fr 1fr;
+}

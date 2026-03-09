@@ -1,0 +1,32 @@
+.vertical_divider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 20px;
+  margin: 0 10px;
+  background-color: #dbdbdb;
+}
+
+.datepiker_input_container {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background-color: #fafafa;
+  border: 2px solid #efefef;
+  border-radius: 8px;
+  font-size: 14px;
+  margin: 0;
+  padding: 6px 8px;
+  width: 100%;
+  height: 31px;
+}
+
+.selected {
+  border-color: #3398db;
+  background-color: #e8f4fb;
+}
+
+.error {
+  border-color: #e16d6d;
+  background-color: #fafafa;
+}

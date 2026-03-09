@@ -1,0 +1,46 @@
+import { useCallback, useState } from 'react';
+
+import type { DateSlotKey } from '../types';
+
+type FieldState = {
+  date: string;
+  time: string;
+};
+
+const initState: Record<DateSlotKey, FieldState> = {
+  'start-date': { date: '', time: '' },
+  'end-date': { date: '', time: '' },
+  'single-date': { date: '', time: '' },
+};
+
+export const useSlotFields = () => {
+  const [fields, setFields] = useState(initState);
+
+  const updateDateField = useCallback((key: DateSlotKey, date: string) => {
+    setFields(prevFields => ({ ...prevFields, [key]: { ...prevFields[key], date } }));
+  }, []);
+
+  const updateTimeField = useCallback((key: DateSlotKey, time: string) => {
+    setFields(prevFields => ({ ...prevFields, [key]: { ...prevFields[key], time } }));
+  }, []);
+
+  const resetFields = useCallback(() => {
+    setFields(initState);
+  }, []);
+
+  const getDateField = useCallback(
+    (key: DateSlotKey) => {
+      return fields[key].date;
+    },
+    [fields]
+  );
+
+  const getTimeField = useCallback(
+    (key: DateSlotKey) => {
+      return fields[key].time;
+    },
+    [fields]
+  );
+
+  return { fields, updateDateField, updateTimeField, resetFields, getDateField, getTimeField };
+};

@@ -1,0 +1,17 @@
+.calendar_week_days {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.calendar_week_day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  color: #6f6f6f;
+  font-size: 12px;
+  font-weight: 400;
+}
