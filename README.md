@@ -4,7 +4,7 @@ A React calendar component that allows users to select a **single date** or a **
 
 ## Demo
 
-![DatePicker Demo](https://react-datepicker-psi.vercel.app/)
+[DatePicker Demo](https://react-datepicker-psi.vercel.app/)
 
 ## Features
 
