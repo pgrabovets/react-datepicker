@@ -1,22 +1,22 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
-import type { useCalendarErrors } from '../hooks/useCalendarErrors';
-import type { useSlotFields } from '../hooks/useSlotFields';
-import type { CalendarConfig, DateRangeSlot } from '../types';
+import type { useCalendarErrors } from "../hooks/useCalendarErrors";
+import type { useCalendarInputs } from "../hooks/useCalendarInputs";
+import type { CalendarConfig, DateRangeInput } from "../types";
 
 export type CalendarContextValue = {
   date: Date;
   singleDate: Date | null;
   singleTime: string | null;
   config: CalendarConfig;
-  activeRangeSlot: DateRangeSlot | null;
-  setActiveRangeSlot: React.Dispatch<React.SetStateAction<DateRangeSlot | null>>;
+  activeRangeInput: DateRangeInput | null;
   startDate: Date | null;
   startTime: string | null;
   endDate: Date | null;
   endTime: string | null;
-  slotErrors: ReturnType<typeof useCalendarErrors>;
-  slotFields: ReturnType<typeof useSlotFields>;
+  inputErrors: ReturnType<typeof useCalendarErrors>;
+  calendarInputs: ReturnType<typeof useCalendarInputs>;
+  setActiveRangeInput: (value: DateRangeInput) => void;
   onCalendarDaySelect: (value: Date) => void;
   toNextMonth: () => void;
   toPrevMonth: () => void;

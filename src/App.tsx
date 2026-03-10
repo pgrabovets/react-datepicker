@@ -4,7 +4,7 @@ import { DatePicker } from "./datepicker/DatePicker";
 function App() {
   return (
     <>
-      <DatePicker isRange={true} hasSlots={true} hasTime={true} />
+      <DatePicker isRange={true} hasInputs={true} hasTime={true} />
     </>
   );
 }

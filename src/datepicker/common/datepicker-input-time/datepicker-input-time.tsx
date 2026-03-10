@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { useCallback, useEffect, useRef } from "react";
 
 import { useCalendarContext } from "../../context/useCalendarContext";
-import type { DateSlotKey, TimeFormat } from "../../types";
+import type { DateInputKey, TimeFormat } from "../../types";
 import {
   fixTimeString,
   normalizeTo24H,
@@ -14,47 +14,47 @@ import {
 type DatePickerInputTimeProps = {
   value: string;
   name: string;
-  slotId: DateSlotKey;
+  inputKey: DateInputKey;
   timeFormat: TimeFormat;
   onSelect?: () => void;
   onChange?: (value: string) => void;
 };
 
 export const DatePickerInputTime = ({
-  slotId,
+  inputKey,
   value,
   timeFormat,
   name,
   onSelect,
   onChange,
 }: DatePickerInputTimeProps) => {
-  const { slotFields, slotErrors } = useCalendarContext();
+  const { calendarInputs, inputErrors } = useCalendarContext();
 
   const isEditingRef = useRef(false);
 
-  const timeField = slotFields.getTimeField(slotId);
+  const timeField = calendarInputs.getTimeField(inputKey);
 
   const setTimeFieldValue = useCallback(
     (value: string) => {
-      slotFields.updateTimeField(slotId, value);
+      calendarInputs.updateTimeField(inputKey, value);
     },
-    [slotFields, slotId],
+    [calendarInputs, inputKey],
   );
 
   const setTimeError = useCallback(
     (error: string) => {
-      slotErrors.updateTimeError(slotId, error);
+      inputErrors.updateTimeError(inputKey, error);
     },
-    [slotErrors, slotId],
+    [inputErrors, inputKey],
   );
 
   const clearTimeError = useCallback(() => {
-    slotErrors.clearTimeError(slotId);
-  }, [slotErrors, slotId]);
+    inputErrors.clearTimeError(inputKey);
+  }, [inputErrors, inputKey]);
 
   const getTimeError = useCallback(() => {
-    return slotErrors.getTimeError(slotId);
-  }, [slotErrors, slotId]);
+    return inputErrors.getTimeError(inputKey);
+  }, [inputErrors, inputKey]);
 
   useEffect(() => {
     if (timeField !== value && !isEditingRef.current && !getTimeError()) {

@@ -1,9 +1,9 @@
-export type DateSlotKey = 'start-date' | 'end-date' | 'single-date';
+export type DateInputKey = "start-date" | "end-date" | "single-date";
 
-export type TimeFormat = '12h' | '24h';
+export type TimeFormat = "12h" | "24h";
 
-export type DateRangeSlot = {
-  key: DateSlotKey;
+export type DateRangeInput = {
+  key: DateInputKey;
 };
 
 export type DateRange = {
@@ -17,7 +17,7 @@ export type DateSingle = {
 
 export type CalendarConfig = {
   isRange: boolean;
-  hasSlots: boolean;
+  hasInputs: boolean;
   isDueDate: boolean;
   hasTime: boolean;
   timeFormat: TimeFormat;

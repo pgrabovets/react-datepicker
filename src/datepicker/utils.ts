@@ -1,8 +1,26 @@
-import { format, isAfter } from 'date-fns';
+import { format, isAfter } from "date-fns";
 
-import type { CalendarConfig, DateRange, DateSingle, TimeFormat } from './types';
+import type {
+  CalendarConfig,
+  DateRange,
+  DateSingle,
+  TimeFormat,
+} from "./types";
 
-const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const allMonths = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 const config = {
   WIDTH: 7,
@@ -10,11 +28,11 @@ const config = {
 };
 
 export const getDefaultTime = (config: CalendarConfig) => {
-  if (config.timeFormat === '12h') {
-    return '12:00 AM';
+  if (config.timeFormat === "12h") {
+    return "12:00 AM";
   }
 
-  return '0:00';
+  return "0:00";
 };
 
 export const getMonthName = (id: number) => {
@@ -24,7 +42,7 @@ export const getMonthName = (id: number) => {
 
   console.error("Can't get month name. Wrong month id range");
 
-  return '';
+  return "";
 };
 
 export const createCalendarDateGrid = (date: Date) => {
@@ -49,15 +67,19 @@ export const createCalendarDateGrid = (date: Date) => {
   return rowArr;
 };
 
-export const getSlotValue = (date: Date | null) => {
+export const formatDateToString = (date: Date | null) => {
   if (!date) {
-    return '';
+    return "";
   }
 
-  return format(date, 'd MMM yyyy');
+  return format(date, "d MMM yyyy");
 };
 
-export const getDefaultCalendarDate = (config: CalendarConfig, single?: DateSingle, range?: DateRange) => {
+export const getDefaultCalendarDate = (
+  config: CalendarConfig,
+  single?: DateSingle,
+  range?: DateRange,
+) => {
   const today = new Date();
 
   if (config.isRange && range) {
@@ -107,11 +129,11 @@ export const getSingleTime = (config: CalendarConfig, single?: DateSingle) => {
     return getDefaultTime(config);
   }
 
-  if (single?.date && config.timeFormat === '12h') {
-    return format(single.date, 'hh:mm a');
+  if (single?.date && config.timeFormat === "12h") {
+    return format(single.date, "hh:mm a");
   }
 
-  return single?.date ? format(single.date, 'HH:mm') : null;
+  return single?.date ? format(single.date, "HH:mm") : null;
 };
 
 export const getStartTime = (config: CalendarConfig, range?: DateRange) => {
@@ -119,11 +141,11 @@ export const getStartTime = (config: CalendarConfig, range?: DateRange) => {
     return getDefaultTime(config);
   }
 
-  if (range?.from && config.timeFormat === '12h') {
-    return format(range.from, 'hh:mm a');
+  if (range?.from && config.timeFormat === "12h") {
+    return format(range.from, "hh:mm a");
   }
 
-  return range?.from ? format(range.from, 'HH:mm') : null;
+  return range?.from ? format(range.from, "HH:mm") : null;
 };
 
 export const getEndTime = (config: CalendarConfig, range?: DateRange) => {
@@ -131,11 +153,11 @@ export const getEndTime = (config: CalendarConfig, range?: DateRange) => {
     return getDefaultTime(config);
   }
 
-  if (range?.to && config.timeFormat === '12h') {
-    return format(range.to, 'hh:mm a');
+  if (range?.to && config.timeFormat === "12h") {
+    return format(range.to, "hh:mm a");
   }
 
-  return range?.to ? format(range.to, 'HH:mm') : null;
+  return range?.to ? format(range.to, "HH:mm") : null;
 };
 
 export const getRangeDates = (date1: Date | null, date2: Date | null) => {
@@ -147,35 +169,35 @@ export const getRangeDates = (date1: Date | null, date2: Date | null) => {
 };
 
 export const parseTime = (time: string, timeFormat: TimeFormat) => {
-  if (timeFormat === '12h') {
-    const timeParts = time.trim().split(' ');
+  if (timeFormat === "12h") {
+    const timeParts = time.trim().split(" ");
     const [hourMin, period] = timeParts;
-    const [hoursStr, minutesStr] = hourMin.split(':');
+    const [hoursStr, minutesStr] = hourMin.split(":");
 
     let hours = parseInt(hoursStr);
     const minutes = parseInt(minutesStr);
 
     if (isNaN(hours) || isNaN(minutes)) {
-      console.error('Invalid time format');
+      console.error("Invalid time format");
 
       return { hours: 0, minutes: 0 };
     }
 
-    if (period?.toUpperCase() === 'PM' && hours !== 12) {
+    if (period?.toUpperCase() === "PM" && hours !== 12) {
       hours += 12;
-    } else if (period?.toUpperCase() === 'AM' && hours === 12) {
+    } else if (period?.toUpperCase() === "AM" && hours === 12) {
       hours = 0;
     }
 
     return { hours, minutes };
   } else {
-    const [hoursStr, minutesStr] = time.split(':');
+    const [hoursStr, minutesStr] = time.split(":");
 
     const hours = parseInt(hoursStr);
     const minutes = parseInt(minutesStr);
 
     if (isNaN(hours) || isNaN(minutes)) {
-      console.error('Invalid time format');
+      console.error("Invalid time format");
 
       return { hours: 0, minutes: 0 };
     }
@@ -186,7 +208,7 @@ export const parseTime = (time: string, timeFormat: TimeFormat) => {
 
 export const getSingleResult = (
   value: { date: Date | null; time: string | null },
-  timeFormat: TimeFormat
+  timeFormat: TimeFormat,
 ): Date | null => {
   const dateResult = value.date ? new Date(value.date) : null;
 
@@ -205,7 +227,7 @@ export const getRangeResult = (
     to: Date | null;
     toTime: string | null;
   },
-  timeFormat: TimeFormat
+  timeFormat: TimeFormat,
 ): DateRange => {
   const fromResult = value.from ? new Date(value.from) : null;
   const toResult = value.to ? new Date(value.to) : null;

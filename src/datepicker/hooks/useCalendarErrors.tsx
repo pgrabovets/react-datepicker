@@ -1,16 +1,16 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
-import type { DateSlotKey } from '../types';
+import type { DateInputKey } from "../types";
 
 type ErrorState = {
   date: string;
   time: string;
 };
 
-const initState: Record<DateSlotKey, ErrorState> = {
-  'start-date': { date: '', time: '' },
-  'end-date': { date: '', time: '' },
-  'single-date': { date: '', time: '' },
+const initState: Record<DateInputKey, ErrorState> = {
+  "start-date": { date: "", time: "" },
+  "end-date": { date: "", time: "" },
+  "single-date": { date: "", time: "" },
 };
 
 export const useCalendarErrors = () => {
@@ -20,41 +20,53 @@ export const useCalendarErrors = () => {
     setErrors(initState);
   }, []);
 
-  const updateDateError = useCallback((key: DateSlotKey, error: string) => {
-    setErrors(prevErrors => ({ ...prevErrors, [key]: { ...prevErrors[key], date: error } }));
+  const updateDateError = useCallback((key: DateInputKey, error: string) => {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [key]: { ...prevErrors[key], date: error },
+    }));
   }, []);
 
-  const updateTimeError = useCallback((key: DateSlotKey, error: string) => {
-    setErrors(prevErrors => ({ ...prevErrors, [key]: { ...prevErrors[key], time: error } }));
+  const updateTimeError = useCallback((key: DateInputKey, error: string) => {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [key]: { ...prevErrors[key], time: error },
+    }));
   }, []);
 
-  const clearDateError = useCallback((key: DateSlotKey) => {
-    setErrors(prevErrors => ({ ...prevErrors, [key]: { ...prevErrors[key], date: '' } }));
+  const clearDateError = useCallback((key: DateInputKey) => {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [key]: { ...prevErrors[key], date: "" },
+    }));
   }, []);
 
-  const clearTimeError = useCallback((key: DateSlotKey) => {
-    setErrors(prevErrors => ({ ...prevErrors, [key]: { ...prevErrors[key], time: '' } }));
+  const clearTimeError = useCallback((key: DateInputKey) => {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [key]: { ...prevErrors[key], time: "" },
+    }));
   }, []);
 
   const getDateError = useCallback(
-    (key: DateSlotKey) => {
+    (key: DateInputKey) => {
       return errors[key].date;
     },
-    [errors]
+    [errors],
   );
 
   const getTimeError = useCallback(
-    (key: DateSlotKey) => {
+    (key: DateInputKey) => {
       return errors[key].time;
     },
-    [errors]
+    [errors],
   );
 
   const hasErrors = useCallback(
-    (key: DateSlotKey) => {
-      return errors[key].date !== '' || errors[key].time !== '';
+    (key: DateInputKey) => {
+      return errors[key].date !== "" || errors[key].time !== "";
     },
-    [errors]
+    [errors],
   );
 
   return {

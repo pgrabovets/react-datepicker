@@ -1,14 +1,14 @@
 import clsx from "clsx";
 import s from "./styles.module.css";
 import { useCalendarContext } from "../../context/useCalendarContext";
-import type { DateSlotKey } from "../../types";
+import type { DateInputKey } from "../../types";
 import { getDefaultTime } from "../../utils";
 import { DatePickerInputDate } from "../datepicker-input-date/datepicker-input-date";
 import { DatePickerInputTime } from "../datepicker-input-time/datepicker-input-time";
 
 type DatePickerInputProps = {
   value: string;
-  id: DateSlotKey;
+  id: DateInputKey;
   placeholder: string;
   time?: string;
   isActive?: boolean;
@@ -27,8 +27,8 @@ export const DatePickerInput = ({
   onSelect,
   onTimeChange,
 }: DatePickerInputProps) => {
-  const { config, slotErrors } = useCalendarContext();
-  const hasErrors = slotErrors.hasErrors(id);
+  const { config, inputErrors } = useCalendarContext();
+  const hasErrors = inputErrors.hasErrors(id);
 
   return (
     <div
@@ -39,9 +39,9 @@ export const DatePickerInput = ({
       )}
     >
       <DatePickerInputDate
-        slotId={id}
+        inputKey={id}
         value={value ?? ""}
-        name={`${id}-slot-date-field`}
+        name={`${id}-date-field`}
         placeholder={placeholder}
         onSelect={() => onSelect?.(id)}
         onChange={onDateChange}
@@ -50,10 +50,10 @@ export const DatePickerInput = ({
         <>
           <div className={s.vertical_divider}></div>
           <DatePickerInputTime
-            slotId={id}
+            inputKey={id}
             value={time ?? getDefaultTime(config)}
             timeFormat={config.timeFormat}
-            name={`${id}-slot-time-field`}
+            name={`${id}-time-field`}
             onSelect={() => onSelect?.(id)}
             onChange={onTimeChange}
           />

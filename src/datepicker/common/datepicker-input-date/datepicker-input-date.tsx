@@ -3,52 +3,52 @@ import clsx from "clsx";
 import { useCallback, useEffect, useRef } from "react";
 
 import { useCalendarContext } from "../../context/useCalendarContext";
-import type { DateSlotKey } from "../../types";
-import { getSlotValue } from "../../utils";
+import type { DateInputKey } from "../../types";
+import { formatDateToString } from "../../utils";
 import { isValidDate, parseFlexibleDate } from "../utils/date-input-utils";
 
 type DatePickerInputDateProps = {
   value: string;
   name: string;
   placeholder: string;
-  slotId: DateSlotKey;
+  inputKey: DateInputKey;
   onSelect?: () => void;
   onChange?: (value: Date) => void;
 };
 
 export const DatePickerInputDate = ({
-  slotId,
+  inputKey,
   value,
   placeholder,
   name,
   onSelect,
   onChange,
 }: DatePickerInputDateProps) => {
-  const { slotFields, slotErrors } = useCalendarContext();
-  const dateField = slotFields.getDateField(slotId);
+  const { calendarInputs, inputErrors } = useCalendarContext();
+  const dateField = calendarInputs.getDateField(inputKey);
   const isEditingRef = useRef(false);
 
   const setDateFieldValue = useCallback(
     (value: string) => {
-      slotFields.updateDateField(slotId, value);
+      calendarInputs.updateDateField(inputKey, value);
     },
-    [slotFields, slotId],
+    [calendarInputs, inputKey],
   );
 
   const setDateError = useCallback(
     (error: string) => {
-      slotErrors.updateDateError(slotId, error);
+      inputErrors.updateDateError(inputKey, error);
     },
-    [slotErrors, slotId],
+    [inputErrors, inputKey],
   );
 
   const getDateError = useCallback(() => {
-    return slotErrors.getDateError(slotId);
-  }, [slotErrors, slotId]);
+    return inputErrors.getDateError(inputKey);
+  }, [inputErrors, inputKey]);
 
   const clearDateError = useCallback(() => {
-    slotErrors.clearDateError(slotId);
-  }, [slotErrors, slotId]);
+    inputErrors.clearDateError(inputKey);
+  }, [inputErrors, inputKey]);
 
   useEffect(() => {
     if (dateField !== value && !isEditingRef.current && !getDateError()) {
@@ -61,8 +61,8 @@ export const DatePickerInputDate = ({
     dateField,
     clearDateError,
     getDateError,
-    slotErrors,
-    slotId,
+    inputErrors,
+    inputKey,
   ]);
 
   const validateAndUpdateDate = (newValue: string) => {
@@ -76,7 +76,7 @@ export const DatePickerInputDate = ({
     const parsedDate = parseFlexibleDate(newValue);
 
     if (parsedDate && isValidDate(parsedDate)) {
-      setDateFieldValue(getSlotValue(parsedDate));
+      setDateFieldValue(formatDateToString(parsedDate));
       onChange?.(parsedDate);
       clearDateError();
     } else {

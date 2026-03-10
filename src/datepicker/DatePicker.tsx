@@ -16,7 +16,7 @@ type DatePickerProps = Partial<{
   range: DateRange;
   isRange: boolean;
   isDueDate: boolean;
-  hasSlots: boolean;
+  hasInputs: boolean;
   hasTime: boolean;
   timeFormat: TimeFormat;
   onSingleChange: (value: Date | null) => void;
@@ -29,7 +29,7 @@ export const DatePicker = ({
   range,
   isRange,
   isDueDate,
-  hasSlots,
+  hasInputs,
   hasTime,
   timeFormat,
   onSingleChange,
@@ -39,7 +39,7 @@ export const DatePicker = ({
   const config = {
     isRange: isRange ?? defaultConfig.isRange,
     isDueDate: isDueDate ?? defaultConfig.isDueDate,
-    hasSlots: hasSlots ?? defaultConfig.hasSlots,
+    hasInputs: hasInputs ?? defaultConfig.hasInputs,
     hasTime: hasTime ?? defaultConfig.hasTime,
     timeFormat: timeFormat ?? defaultConfig.timeFormat,
   };
@@ -56,7 +56,7 @@ export const DatePicker = ({
       onClear={onClear}
     >
       <DatePickerCard>
-        {config.hasSlots && inputs}
+        {config.hasInputs && inputs}
         <CalendarHeader />
         <CalendarWeekDays />
         <CalendarDaysGrid />

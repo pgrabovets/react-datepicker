@@ -4,8 +4,13 @@ import { useCalendarDate } from "../hooks/useCalendarDate";
 import { useCalendarErrors } from "../hooks/useCalendarErrors";
 import { useCalendarRange } from "../hooks/useCalendarRange";
 import { useCalendarSingle } from "../hooks/useCalendarSingle";
-import { useSlotFields } from "../hooks/useSlotFields";
-import type { CalendarConfig, DateRange, DateSingle } from "../types";
+import { useCalendarInputs } from "../hooks/useCalendarInputs";
+import type {
+  CalendarConfig,
+  DateRange,
+  DateSingle,
+  DateRangeInput,
+} from "../types";
 import {
   getDefaultCalendarDate,
   getRangeDates,
@@ -37,8 +42,8 @@ export const CalendarProvider = ({
     getDefaultCalendarDate(config, single, range),
   );
   const {
-    activeRangeSlot,
-    setActiveRangeSlot,
+    activeRangeInput,
+    setactiveRangeInput,
     startDate,
     startTime,
     endDate,
@@ -52,9 +57,9 @@ export const CalendarProvider = ({
   const { singleDate, setSingleDate, singleTime, setSingleTime } =
     useCalendarSingle(config, single);
 
-  const slotErrors = useCalendarErrors();
+  const inputErrors = useCalendarErrors();
 
-  const slotFields = useSlotFields();
+  const calendarInputs = useCalendarInputs();
 
   const updateStartDate = useCallback(
     (value: Date) => {
@@ -146,9 +151,9 @@ export const CalendarProvider = ({
     setStartTime,
   ]);
 
-  const resetActiveRangeSlot = useCallback(() => {
+  const resetactiveRangeInput = useCallback(() => {
     if (config.isRange && config.isDueDate) {
-      setActiveRangeSlot({
+      setactiveRangeInput({
         key: "end-date",
       });
 
@@ -156,73 +161,73 @@ export const CalendarProvider = ({
     }
 
     if (config.isRange) {
-      setActiveRangeSlot({
+      setactiveRangeInput({
         key: "start-date",
       });
 
       return;
     }
 
-    setActiveRangeSlot({
+    setactiveRangeInput({
       key: "single-date",
     });
-  }, [config.isDueDate, config.isRange, setActiveRangeSlot]);
+  }, [config.isDueDate, config.isRange, setactiveRangeInput]);
 
   const onCalendarDaySelect = useCallback(
     (value: Date) => {
-      if (config.isRange && activeRangeSlot?.key === "start-date") {
+      if (config.isRange && activeRangeInput?.key === "start-date") {
         updateStartDate(value);
-        setActiveRangeSlot({
+        setactiveRangeInput({
           key: "end-date",
         });
-        slotErrors.clearDateError("start-date");
+        inputErrors.clearDateError("start-date");
 
         return;
       }
 
-      if (config.isRange && activeRangeSlot?.key === "end-date") {
+      if (config.isRange && activeRangeInput?.key === "end-date") {
         updateEndDate(value);
-        setActiveRangeSlot({
+        setactiveRangeInput({
           key: "start-date",
         });
-        slotErrors.clearDateError("end-date");
+        inputErrors.clearDateError("end-date");
 
         return;
       }
 
       handleSetSingleDate(value);
-      slotErrors.clearDateError("single-date");
+      inputErrors.clearDateError("single-date");
     },
     [
       config.isRange,
-      activeRangeSlot?.key,
+      activeRangeInput?.key,
       handleSetSingleDate,
-      slotErrors,
+      inputErrors,
       updateStartDate,
-      setActiveRangeSlot,
+      setactiveRangeInput,
       updateEndDate,
     ],
   );
 
   const onCalendarClear = useCallback(() => {
     resetAllSelections();
-    resetActiveRangeSlot();
+    resetactiveRangeInput();
     setToday();
     onRangeChange?.({
       from: null,
       to: null,
     });
     onSingleChange?.(null);
-    slotErrors.resetErrors();
+    inputErrors.resetErrors();
     onClear?.();
   }, [
     onClear,
     onRangeChange,
     onSingleChange,
-    resetActiveRangeSlot,
+    resetactiveRangeInput,
     resetAllSelections,
     setToday,
-    slotErrors,
+    inputErrors,
   ]);
 
   const onStartTimeChange = useCallback(
@@ -318,9 +323,16 @@ export const CalendarProvider = ({
     [handleSetSingleDate, setDate],
   );
 
+  const setActiveRangeInput = useCallback(
+    (value: DateRangeInput) => {
+      setactiveRangeInput(value);
+    },
+    [setactiveRangeInput],
+  );
+
   const value = useMemo(
     () => ({
-      activeRangeSlot,
+      activeRangeInput,
       config,
       date,
       endDate,
@@ -329,13 +341,14 @@ export const CalendarProvider = ({
       singleTime,
       startDate,
       startTime,
-      slotErrors,
-      slotFields,
+      inputErrors,
+      calendarInputs,
+      setActiveRangeInput,
       toNextMonth,
       toPrevMonth,
       onCalendarClear,
       onCalendarDaySelect,
-      setActiveRangeSlot,
+      setactiveRangeInput,
       onStartTimeChange,
       onEndTimeChange,
       onSingleTimeChange,
@@ -344,7 +357,7 @@ export const CalendarProvider = ({
       onSingleDateChange,
     }),
     [
-      activeRangeSlot,
+      activeRangeInput,
       config,
       date,
       endDate,
@@ -353,13 +366,14 @@ export const CalendarProvider = ({
       singleTime,
       startDate,
       startTime,
-      slotErrors,
-      slotFields,
+      inputErrors,
+      calendarInputs,
+      setActiveRangeInput,
       toNextMonth,
       toPrevMonth,
       onCalendarClear,
       onCalendarDaySelect,
-      setActiveRangeSlot,
+      setactiveRangeInput,
       onStartTimeChange,
       onEndTimeChange,
       onSingleTimeChange,

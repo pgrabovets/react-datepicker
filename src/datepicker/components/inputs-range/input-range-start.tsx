@@ -1,31 +1,31 @@
 import { useCalendarContext } from "../../context/useCalendarContext";
 import { DatePickerInput } from "../../common/datepicker-input/datepicker-input";
-import type { DateRangeSlot } from "../../types";
-import { getSlotValue } from "../../utils";
+import type { DateRangeInput } from "../../types";
+import { formatDateToString } from "../../utils";
 
 export const InputRangeStart = () => {
   const {
-    activeRangeSlot,
-    setActiveRangeSlot,
+    activeRangeInput,
+    setActiveRangeInput,
     startDate,
     startTime,
     onStartTimeChange,
     onStartDateChange,
   } = useCalendarContext();
 
-  const slot: DateRangeSlot = {
+  const dateRangeInput: DateRangeInput = {
     key: "start-date",
   };
 
   return (
     <DatePickerInput
-      id={slot.key}
-      value={getSlotValue(startDate)}
+      id={dateRangeInput.key}
+      value={formatDateToString(startDate)}
       time={startTime ?? undefined}
       placeholder="Select Start"
-      isActive={activeRangeSlot?.key === slot.key}
+      isActive={activeRangeInput?.key === dateRangeInput.key}
       onSelect={() => {
-        setActiveRangeSlot(slot);
+        setActiveRangeInput(dateRangeInput);
       }}
       onTimeChange={(value) => {
         onStartTimeChange(value);
