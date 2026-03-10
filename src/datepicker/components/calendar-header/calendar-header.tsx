@@ -1,8 +1,8 @@
 import s from "./styles.module.css";
 
 import { useCalendarContext } from "../../context/useCalendarContext";
-import { ArrowLeft } from "../icons/ArrowLeft";
-import { ArrowRight } from "../icons/ArrowRight";
+import { ArrowLeft } from "../../common/icons/arrow-left";
+import { ArrowRight } from "../../common/icons/arrow-right";
 import { getMonthName } from "../../utils";
 
 export const CalendarHeader = () => {
