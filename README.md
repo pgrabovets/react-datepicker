@@ -1,73 +1,134 @@
-# React + TypeScript + Vite
+# React Date Picker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React calendar component that allows users to select a **single date** or a **date range**, with optional **time selection**.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Single date selection
+- Date range selection
+- Optional date inputs
+- Optional time selection
+- 12h / 24h time formats
+- Lightweight and easy to integrate
 
-## React Compiler
+## Dependencies
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+This component uses the following dependencies:
 
-## Expanding the ESLint configuration
+- react
+- clsx
+- date-fns
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Currently the component is not published to npm.
+Clone the repository and copy the `src/datepicker` directory into your project.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone repo_url
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+pnpm install
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Usage
+
+Default (Single date)
+
+```tsx
+<DatePicker />
+```
+
+Single date with input
+
+```tsx
+<DatePicker hasInputs />
+```
+
+Single date with date and time inputs
+
+```tsx
+<DatePicker hasInputs hasTime />
+```
+
+Single date with 24h time format
+
+```tsx
+<DatePicker hasInputs hasTime timeFormat="24h" />
+```
+
+Range selection
+
+```tsx
+<DatePicker isRange />
+```
+
+Range selection with inputs
+
+```tsx
+<DatePicker isRange hasInputs />
+```
+
+Range selection with date and time
+
+```tsx
+<DatePicker isRange hasInputs hasTime />
+```
+
+Range selection with 24h time format
+
+```tsx
+<DatePicker isRange hasInputs hasTime timeFormat="24h" />
+```
+
+## Types
+
+```ts
+type DateSingle = {
+  date: Date | null;
+};
+
+type DateRange = {
+  from: Date | null;
+  to: Date | null;
+};
+
+type TimeFormat = "12h" | "24h";
+
+type DatePickerProps = {
+  single?: DateSingle;
+  range?: DateRange;
+  isRange?: boolean;
+  isDueDate?: boolean;
+  hasInputs?: boolean;
+  hasTime?: boolean;
+  timeFormat?: TimeFormat;
+  onSingleChange?: (value: Date | null) => void;
+  onRangeChange?: (value: DateRange) => void;
+  onClear?: () => void;
+};
+```
+
+## Props
+
+| Prop             | Type                                       | Description                        |
+| ---------------- | ------------------------------------------ | ---------------------------------- |
+| `isRange`        | `boolean`                                  | Enables date range selection       |
+| `isDueDate`      | `boolean`                                  | Enables due date behavior          |
+| `hasInputs`      | `boolean`                                  | Shows date input fields            |
+| `hasTime`        | `boolean`                                  | Enables time selection             |
+| `single`         | `{ date: Date \| null }`                   | Default single value               |
+| `range`          | `{ from: Date \| null; to: Date \| null }` | Default range value                |
+| `timeFormat`     | `"12h" \| "24h"`                           | Time format                        |
+| `onSingleChange` | `(value: Date) => void`                    | Callback for single date change    |
+| `onRangeChange`  | `(value: DateRange) => void`               | Callback for range change          |
+| `onClear`        | `() => void`                               | Callback when selection is cleared |
+
+## Development
+
+```bash
+pnpm run dev
 ```
