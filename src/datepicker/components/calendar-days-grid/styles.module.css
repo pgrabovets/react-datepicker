@@ -1,7 +1,7 @@
 .calendar_days_grid {
   display: grid;
   width: 100%;
-  gap: 8px;
+  gap: 6px;
 }
 
 .calendar_week_container {
@@ -21,8 +21,8 @@
 .calendar_day_btn {
   box-sizing: border-box;
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
