@@ -12,15 +12,30 @@
 }
 
 h1 {
-  color: oklch(0.21 0.034 264.665);
-  font-size: 48px;
-  font-weight: 700;
+  color: oklch(0.269 0 0);
+  font-size: 32px;
+  font-weight: 600;
+  text-align: start;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+p {
+  color: oklch(0.556 0 0);
+  font-size: 16px;
+  margin: 0;
+  margin-bottom: 16px;
 }
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+section {
+  display: flex;
+  gap: 36px;
+  margin-bottom: 36px;
 }
